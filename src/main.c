@@ -116,7 +116,7 @@ int set_limits( void )
 int main( int ac, char **av )
 {
 	int oc, justTest = 0, debug = 0;
-	char *pidfile = NULL;
+	char *pidfile = NULL, *cwd;
 	double diff;
 
 	// make a control structure
@@ -188,8 +188,11 @@ int main( int ac, char **av )
 
 	if( chdir( ctl->basedir ) )
 		fatal( "Could not chdir to base dir %s -- %s", ctl->basedir, Err );
-	else
-		debug( "Working directory now %s", getcwd( NULL, 0 ) );
+	else {
+		cwd = getcwd( NULL, 0 );
+		debug( "Working directory now %s", cwd );
+		free( cwd )
+	}
 
 	if( ctl->run_flags & RUN_DAEMON )
 	{
